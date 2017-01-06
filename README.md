@@ -1,5 +1,5 @@
-# Milis İşletim Sistemi (LFS kitabına dayalı)
-Milis Operating System based on Linux From Scratch book
+# Pisi Linux (LFS kitabına dayalı)
+Pisi Operating System based on Linux From Scratch book
 
  Konak Sistem için Yapılması Gerekenler (ubuntu)
  
@@ -11,14 +11,14 @@ Milis Operating System based on Linux From Scratch book
  
  ln -s /bin/bash /bin/sh
  
- MİLİS SİSTEMİNİN KURULUM YÖNERGELERİ
+ PİSİ SİSTEMİNİN KURULUM YÖNERGELERİ
 
  Dikkat:
  1-Bu işlemleri root kullanıcısıyla yapınız.
  
  -Mekanizmanın Kurulması
  
- git clone https://github.com/milisarge/malfs-milis.git malfs
+ git clone https://github.com/ayhanyalcinsoy/malfs-milis.git
  
  cd malfs
  
