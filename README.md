@@ -1,69 +1,157 @@
+# Milis İşletim Sistemi (LFS kitabına dayalı)
+Milis Operating System based on Linux From Scratch book
 
+ Konak Sistem için Yapılması Gerekenler (ubuntu)
+ 
+ apt-get install bsdtar binutils gcc g++ m4 make bison gawk texinfo pkg-config squashfs-tools lzip
+ 
+ mv /usr/bin/mawk /usr/bin/mawk-eski
+ 
+ rm /bin/sh
+ 
+ ln -s /bin/bash /bin/sh
+ 
+ MİLİS SİSTEMİNİN KURULUM YÖNERGELERİ
 
-##Milis İşletim Sistemi
-Milis işletim sistemi,lfs esaslarını temel alarak yerli bağımsız bir dağıtım olmak üzere yola çıkmıştır.
-Milis işletim sistemi kendine özgü mps paket yöneticisi kullanmaktadır.
-Mps paket yöneticisi performansı ve sorunsuz paket derleme-kurup-kaldırma-güncellemeyi hedeflemektedir.
-Bash betik dilinde yazılmıştır,bu sayede direk linux komutlarıyla paket sistemi daha etkileşimli bir şekilde yönetilmektedir.
-Milis işletim sisteminin paketleri bir lzma algoritması olan lzip yöntemiyle sıkıştırılmaktadır.Uzantı olarak mps.lz şeklindedirler.
-Milis sisteminde ayrıca talimatnameye dayalı derleme sistemi kullanılmaktadır.
-Her paket için bir talimat dosyası vardır,bu talimat dosyası bir paketin nasıl derlenip nasıl paket haline getireleciğini yazar.
-Talimat dosyaları da bash betik dilindedir.Talimatlar mps tarafından kullanılarak paket üretimi sağlanmaktadır.
-Milis işletim sistemi son güncel sürümleri dikkate alarak paket üretmektedir,yalnız sürekli güncellikten ziyade kararlı güncellik benimsenmektedir.
-Milis başta ülkemizin işletim sistemi ihtiyaçlarını dikkate almayı hedeflemektedir.
-Genel felsefe olarak ülkemizdeki bilgisayar kullanıcıları için linuxu kolaylaştırıp 
-Milis işletim sisteminin sorunsuz bir işletim sistemi olmasını sağlamayı ve yazılımsal olarak dışa bağımlı olmaktan kurtarmayı esas alır. 
-Milis'in ana hedefi ülkemizde her bilgisayarda(resmi,işyerleri,ev kullanıcıları) bağımsız yazılım ve bileşkenlerinin kullanımını sağlamaktır.
-Kısaca Milis,sanal dünyanın getirisi olarak hakkımız olan kaybettiğimiz bilim ve ilerlemenin yeniden yakalanması için Milisçe bir çalışmadır. 
-Ayrıca her türlü katkıda bulunmak isteyenler için bulunmaz bir türkçe açık kaynak projesidir.
+ Dikkat:
+ 1-Bu işlemleri root kullanıcısıyla yapınız.
+ 
+ -Mekanizmanın Kurulması
+ 
+ git clone https://github.com/milisarge/malfs-milis.git malfs
+ 
+ cd malfs
+ 
+ ilk önce host sistemin gereksinimleri karşıladığının kontrol edilmesi
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -gk
+ 
+ yukarıdaki işlemin sonucuna göre gerekli gereksinimler yuklenir.
+ 
+ ayrıca http://www.linuxfromscratch.org/lfs/view/development/prologue/hostreqs.html sayfasından versiyon kontrolü yapınız.
 
+ gereksinimler tamamlandıktan sonra gerekli ortam değişkeni ayarı yapılır.
 
-Milis Anasayfa : http://milis.gungre.ch
+ root@makine:/opt/malfs# mkdir -p /mnt/lfs
 
-####İletişim:
+ root@makine:/opt/malfs# export LFS=/mnt/lfs
 
-milisarge@gmail.com 
+ gerekli kaynak kodların indirilmesi 
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -ki
 
-irc.freenode.net #milisarge
+ birinci ayarlar yapılır
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -ba
 
+ lfs kullanıcısıyla oturum acılmış olur.önsistem derlenmeye baslanır.
+ 
+ lfs@makine:~$ ./lfs-mekanizma -td onsistem
 
-Sunucu desteği için Lucas Sköldqvist dostumuza teşekkür ederiz. 
+ =======>  '/home/lfs/talimatname/onsistem/0libarchive/0libarchive#3.1.2-x86_64.mps.lz' derleme basarili
+ 
+ yukarıdaki ifade goruldukten sonra exit komutu ile lfs kullanıcısından çıkılır.
 
-###MPS (Milis Paket Sistemi)
+ lfs önsistemin sıkıstırılması(yedeklemek için)
 
-Mps Milis işletim sisteminin kendine özgü sıfırdan bash betik dilinde yazılmış paket yöneticisidir.
-Mps ile talimatnamedeki talimatları kullanarak paket üretebilir,paket kurabilir kaldırabilir ve güncelleyebilirsiniz.
+ root@makine:/opt/malfs# ./lfs-mekanizma -os
 
-```
-mps guncelle                İkili paket veritabanını ve sistemi günceller.
+ üretici önsistemin yedeklenmesinden sonra üretici sisteme girmek için gerekli ayarlar yapılır.
 
-mps kur paket_adi           Depodan yazılım paketi kurar.
+ root@makine:/opt/malfs# ./lfs-mekanizma -ia
+ 
+ üretici sisteme girilir.
 
-mps kur paket_adi.mps.lz    Dosyadan yazılım paketi kurar.
+ root@makine:/opt/malfs# ./lfs-mekanizma -cg
 
-mps sil paket_adi           Paket siler.
+ root [ / ]#   ekranına düşülür."command not found" şeklinde hatalar görülebilir,normaldir.bash yuklemesinden sonra düzelecek.
 
-mps ara paket_adi           Paket arar.
+ üretici sistem içersindeyken gerekli exportlar yapılır.
 
+ root [ / ]#  export PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/root/bin
+ 
+ root [ / ]#  export FORCE_UNSAFE_CONFIGURE=1 
 
-API Parametreler
+ root dizinine girilir.
+ 
+ root [ / ]#  cd /root
 
-mps -G                      İkili paket veritabanini gunceller.
+ root [ / ]#  ./lfs-mekanizma -td temel
 
-mps -GG                     Git sunucusundan talimatname ve sistem günceller.
+ komutu verilip temel sistemin kurulumu sağlanır.
 
-mps -kur paket_ismi         İlgili paketi bağimlılıklarıyla ağdan çekip kurar.
+ "bash chroot dışına çıkıp elle kurulmalıdır."  mesajı görülünce
+ 
+ "exit" ile chroot dışına çıkılır
 
-mps -s paket_ismi           İlgili paketi kaldırır.
+ root@makine:/opt/malfs# ./lfs-mekanizma -bk
 
-mps -k paket_ismi           Yereldeki paketi bagimliliksiz kurar.
+ komutu verilip bash kurulumu sağlanır.
 
-mps -kl                     Kurulu paket listesini verir.
+ tekrar chroot içine girilir.ortam değişkenleri ayarlandıktan sonra,temel sistem derlenmeye devam edilir.
 
-mps -kk paket_ismi          İlgili paketin kurulu olma durumunu verir.
+ root@makine:/opt/malfs# ./lfs-mekanizma -cg
+ 
+ root [ / ]#  export PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/root/bin
+ 
+ root [ / ]#  export FORCE_UNSAFE_CONFIGURE=1
+ 
+ root [ / ]#  cd /root
 
-mps -d paket_ismi           İlgili paketin talimat dosyasına göre bağımlıksız derler,paketler.
+ root [ / ]#  ./lfs-mekanizma -td temel
+ 
+ en son aşağıdaki mesaj ile derleme bitmelidir.
+ 
+ =======>  'ca-certificates#20160110-x86_64.mps.lz' basarili sekilde kuruldu.
 
-mps -derle paket_ismi       İlgili paketin talimat dosyasına göre bağımlıklarıyla derler,paketler.
-```
+ temel sistem paketlerin paket_depo altında toplanması-paketlerin arsivlenmesi
 
+ root [ / ]#  paketleri_arsivle
+
+ chroottan cıkılıp,temel sistemin yedegi alınır.
+
+ root [ / ]#  exit 
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -ts
+
+ tekrar chroot içine girilir.ortam değişkenleri ayarlandıktan sonra,temel sistem için gerekli ek paketler derlenir.
+
+ root@makine:/opt/malfs# ./lfs-mekanizma -cg
+ 
+ root [ / ]#  export FORCE_UNSAFE_CONFIGURE=1
+ 
+ root [ / ]#  cd /root
+
+ root [ / ]#  ./lfs-mekanizma -td temel-ek
+ 
+ en son bu mesaj ile derleme bitmelidir.
+ 
+ =======>  'vim#7.4-x86_64.mps.lz' basarili sekilde kuruldu.
+ 
+ başlatıcı(initram-initrd) oluşturulması
+ 
+ root [ / ]#  ./lfs-mekanizma -bo
+
+ temel-ek sistem paketlerin paket_depo altında toplanması-paketlerin arsivlenmesi
+
+ root [ / ]#  paketleri_arsivle
+
+ chroottan cıkılıp,son sistemin yedegi alınır.
+
+ root [ / ]#  exit 
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -ss
+ 
+ son sistemin yedeği alındıktan sonra iso yapımı için sırasıyla
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -so
+ root@makine:/opt/malfs# ./lfs-mekanizma -io
+ 
+ komutları verilir.çalışma dizini altında malfs.iso oluşacaktır.
+ 
+ root@makine:/opt/malfs# ./qemu.sh
+ 
+ komutuyla iso test edilebilir. 
+ 
+ 
+ 
