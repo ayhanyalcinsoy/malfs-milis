@@ -3,7 +3,7 @@
 # Packager: milisarge@gmail.com
 
 name=ca-certificates
-version=20160110
+version=20160104
 release=1
 
 source=(http://downloads.nutyx.org/files/$name-$version.tar.gz)

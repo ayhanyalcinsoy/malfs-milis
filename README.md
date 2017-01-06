@@ -50,7 +50,11 @@ Pisi Operating System based on Linux From Scratch book
 
  =======>  '/home/lfs/talimatname/onsistem/0libarchive/0libarchive#3.1.2-x86_64.mps.lz' derleme basarili
  
- yukarıdaki ifade goruldukten sonra exit komutu ile lfs kullanıcısından çıkılır.
+ yukarıdaki ifade goruldukten sonra
+ 
+ "exit"
+ 
+ komutu ile lfs kullanıcısından çıkılır.
 
  lfs önsistemin sıkıstırılması(yedeklemek için)
 
@@ -103,18 +107,8 @@ Pisi Operating System based on Linux From Scratch book
  en son aşağıdaki mesaj ile derleme bitmelidir.
  
  =======>  'ca-certificates#20160110-x86_64.mps.lz' basarili sekilde kuruldu.
-
- temel sistem paketlerin paket_depo altında toplanması-paketlerin arsivlenmesi
-
- root [ / ]#  paketleri_arsivle
-
- chroottan cıkılıp,temel sistemin yedegi alınır.
-
- root [ / ]#  exit 
  
- root@makine:/opt/malfs# ./lfs-mekanizma -ts
- 
- PAKETÇİ ENTEGRESİ
+ # PAKETÇİ ENTEGRESİ
  
  A-pisi paketçisi için
 
@@ -154,11 +148,22 @@ Pisi Operating System based on Linux From Scratch book
  
  python setup.py install
 
-en son sistemi pisi kurulduktan sonra pspeclerin bulunduğu core repo klonlanır.
-
 NOT: 32bit de yaptıysanız etc/pisi/pisi.conf dosyasına gerekli ayarlar yapılır.
-
+ 
  tekrar chroot içine girilir.ortam değişkenleri ayarlandıktan sonra,temel sistem için gerekli ek paketler derlenir.
+
+ temel sistem paketlerin paket_depo altında toplanması-paketlerin arsivlenmesi
+
+ root [ / ]#  paketleri_arsivle
+
+ chroottan cıkılıp,temel sistemin yedegi alınır.
+
+ root [ / ]#  exit 
+ 
+ root@makine:/opt/malfs# ./lfs-mekanizma -ts
+
+ en son sisteme pisi kurulduktan sonra pspeclerin bulunduğu core repo klonlanır. 
+
 
  
  
