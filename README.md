@@ -113,45 +113,53 @@ Milis Operating System based on Linux From Scratch book
  root [ / ]#  exit 
  
  root@makine:/opt/malfs# ./lfs-mekanizma -ts
+ 
+ PAKETÇİ ENTEGRESİ
+ 
+ A-pisi paketçisi için
+
+ ikincil ayarlar çalıştırılır.
+
+ ./lfs-mekanizma -ia
+
+ sisteme girmek için
+
+ ./lfs-mekanizma -cg
+
+ python derleme
+
+ cd /root/base/python && omps
+
+ perl modulu XML-parser kurulumu
+ 
+ cpan shelline girilir
+
+ cpan
+
+ shellde bu komutla kurulur.sorular enterla geçilir.
+
+ install XML::Parser
+ 
+ /usr/bin/make install  -- OK  ifadesini görülürse kurulum tamamdır.exit le shellden cıkılır.
+
+ intltool kurulumu
+
+ cd /root/base/intltool && omps
+
+ daha sonra pisi-arge icindeki "siralama"daki python modulleri kurulur.aşağıdaki formda.
+
+ tar xf kaynak_kod
+ 
+ cd kaynak_kod
+ 
+ python setup.py install
+
+en son sistemi pisi kurulduktan sonra pspeclerin bulunduğu core repo klonlanır.
+
+NOT: 32bit de yaptıysanız etc/pisi/pisi.conf dosyasına gerekli ayarlar yapılır.
 
  tekrar chroot içine girilir.ortam değişkenleri ayarlandıktan sonra,temel sistem için gerekli ek paketler derlenir.
 
- root@makine:/opt/malfs# ./lfs-mekanizma -cg
- 
- root [ / ]#  export FORCE_UNSAFE_CONFIGURE=1
- 
- root [ / ]#  cd /root
-
- root [ / ]#  ./lfs-mekanizma -td temel-ek
- 
- en son bu mesaj ile derleme bitmelidir.
- 
- =======>  'vim#7.4-x86_64.mps.lz' basarili sekilde kuruldu.
- 
- başlatıcı(initram-initrd) oluşturulması
- 
- root [ / ]#  ./lfs-mekanizma -bo
-
- temel-ek sistem paketlerin paket_depo altında toplanması-paketlerin arsivlenmesi
-
- root [ / ]#  paketleri_arsivle
-
- chroottan cıkılıp,son sistemin yedegi alınır.
-
- root [ / ]#  exit 
- 
- root@makine:/opt/malfs# ./lfs-mekanizma -ss
- 
- son sistemin yedeği alındıktan sonra iso yapımı için sırasıyla
- 
- root@makine:/opt/malfs# ./lfs-mekanizma -so
- root@makine:/opt/malfs# ./lfs-mekanizma -io
- 
- komutları verilir.çalışma dizini altında malfs.iso oluşacaktır.
- 
- root@makine:/opt/malfs# ./qemu.sh
- 
- komutuyla iso test edilebilir. 
  
  
  
